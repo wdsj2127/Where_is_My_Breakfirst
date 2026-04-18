@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmb7hiyfpdd3v"
-path="res://.godot/imported/岩石右下.png-486dc2b5178420c440c3ac0a07fc1f40.ctex"
+uid="uid://btmcpqe8auvtj"
+path="res://.godot/imported/泥土右下.png-903aaf47d36766052b13892df84f7e79.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://map_texture/岩石右下.png"
-dest_files=["res://.godot/imported/岩石右下.png-486dc2b5178420c440c3ac0a07fc1f40.ctex"]
+source_file="res://Map/map_texture/泥土右下.png"
+dest_files=["res://.godot/imported/泥土右下.png-903aaf47d36766052b13892df84f7e79.ctex"]
 
 [params]
 

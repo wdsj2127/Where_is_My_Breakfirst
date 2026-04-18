@@ -6,6 +6,9 @@ const GRAVITY = 2400 # 重力
 const LIFT = 3600 # 升力
 const MAX_LIFT = 1200 # 最大升力
 
+enum PlayerState { IDLE, RUN, LIFT, FALL, DIE, GET, DIG }
+var state: PlayerState
+
 func _physics_process(delta: float) -> void :
 	# 重力
 	if is_on_floor() :
@@ -37,7 +40,7 @@ func _physics_process(delta: float) -> void :
 	pass
 
 # 角色动画
-func update_animation():
+func update_animation() :
 	# 朝向
 	if velocity.x > 0 :
 		animated_sprite_2d.flip_h = false # 面向右边
@@ -45,16 +48,33 @@ func update_animation():
 		animated_sprite_2d.flip_h = true # 面向左边
 		
 	# 动画
-	var anim
+	match state :
+		PlayerState.IDLE :
+			animated_sprite_2d.play("idle")
+		PlayerState.RUN :
+			animated_sprite_2d.play("run")
+		PlayerState.LIFT :
+			animated_sprite_2d.play("lift")
+		PlayerState.FALL :
+			animated_sprite_2d.play("fall")
+		PlayerState.DIG :
+			animated_sprite_2d.play("dig")
+		PlayerState.GET :
+			animated_sprite_2d.play("get")
+		PlayerState.DIE :
+			animated_sprite_2d.play("die")
+	pass
+
+func update_state() :
+	if state == PlayerState.DIE :
+		pass
 	if is_on_floor() :
 		if velocity.x == 0 :
-			anim = "idle"
+			state = PlayerState.IDLE
 		else :
-			anim = "run"
+			state = PlayerState.RUN
 	else :
-		if Input.is_action_pressed("Lift") :
-			anim = "lift"
-		else :
-			anim = "fall"
-	animated_sprite_2d.play(anim)
+		state = PlayerState.FALL
+	if Input.is_action_pressed("Lift") :
+		state = PlayerState.LIFT
 	pass

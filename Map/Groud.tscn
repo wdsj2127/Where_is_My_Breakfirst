@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dwag0ekv3f1h3"]
 
-[ext_resource type="Texture2D" uid="uid://dwvvkoi5tcwmr" path="res://map_texture/bedrock.png" id="1_2kpcn"]
-[ext_resource type="Texture2D" uid="uid://b1g1aal3l2ye2" path="res://map_texture/dirt.png" id="2_4b4qb"]
-[ext_resource type="Texture2D" uid="uid://q26ulmonogm5" path="res://map_texture/stone.png" id="3_tbslj"]
-[ext_resource type="Script" uid="uid://1f38xrvxhwns" path="res://groud.gd" id="4_jhedh"]
+[ext_resource type="Texture2D" uid="uid://dwvvkoi5tcwmr" path="res://Map/map_texture/bedrock.png" id="1_2kpcn"]
+[ext_resource type="Texture2D" uid="uid://b1g1aal3l2ye2" path="res://Map/map_texture/dirt.png" id="2_4b4qb"]
+[ext_resource type="Texture2D" uid="uid://q26ulmonogm5" path="res://Map/map_texture/stone.png" id="3_tbslj"]
+[ext_resource type="Script" uid="uid://1f38xrvxhwns" path="res://Map/groud.gd" id="4_jhedh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2kpcn"]
 texture = ExtResource("1_2kpcn")

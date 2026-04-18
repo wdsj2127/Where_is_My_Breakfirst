@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dwvvkoi5tcwmr"
-path="res://.godot/imported/bedrock.png-36d3a7e82ced66cc1e9761f816d24932.ctex"
+uid="uid://beoydf0r0pmmf"
+path="res://.godot/imported/stone (2).png-392c8ec880ea7a8beab0b954f137b25b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://map_texture/bedrock.png"
-dest_files=["res://.godot/imported/bedrock.png-36d3a7e82ced66cc1e9761f816d24932.ctex"]
+source_file="res://Map/map_texture/stone (2).png"
+dest_files=["res://.godot/imported/stone (2).png-392c8ec880ea7a8beab0b954f137b25b.ctex"]
 
 [params]
 

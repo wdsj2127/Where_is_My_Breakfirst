@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dsvw0xhpno4fs"
-path="res://.godot/imported/泥土下.png-30a2a9de5a20528142aaf70535276b21.ctex"
+uid="uid://dwvvkoi5tcwmr"
+path="res://.godot/imported/bedrock.png-15f1abccfecaf93487eaa56a119c7e34.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://map_texture/泥土下.png"
-dest_files=["res://.godot/imported/泥土下.png-30a2a9de5a20528142aaf70535276b21.ctex"]
+source_file="res://Map/map_texture/bedrock.png"
+dest_files=["res://.godot/imported/bedrock.png-15f1abccfecaf93487eaa56a119c7e34.ctex"]
 
 [params]
 

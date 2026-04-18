@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cpx2lktas4oa"]
 
-[ext_resource type="Script" uid="uid://bbpbf31rcutly" path="res://Character/Player/player_move.gd" id="1_vnk41"]
+[ext_resource type="Script" uid="uid://bqs038wr5ys1" path="res://Character/Player/player_controller.gd" id="1_vnk41"]
 [ext_resource type="Texture2D" uid="uid://devctig6nccxg" path="res://Character/Player/人物动画/站立1.png" id="2_2h1g1"]
 [ext_resource type="Texture2D" uid="uid://beib3nj31saaf" path="res://Character/Player/人物动画/死亡1.png" id="2_xrppt"]
 [ext_resource type="Texture2D" uid="uid://cbi6q5pkd2rja" path="res://Character/Player/人物动画/死亡2.png" id="3_0fghp"]
@@ -160,19 +160,17 @@ animations = [{
 "speed": 6.0
 }]
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1732956255 node_paths=PackedStringArray("animated_sprite_2d")]
+[node name="Player" type="CharacterBody2D" unique_id=1732956255 node_paths=PackedStringArray("animated_sprite_2d")]
 script = ExtResource("1_vnk41")
-animated_sprite_2d = NodePath("AnimatedSprite2D")
+animated_sprite_2d = NodePath("Anima")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2011810208]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=2011810208]
 position = Vector2(0, -69)
 shape = SubResource("CapsuleShape2D_vnk41")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=582421408]
+[node name="Anima" type="AnimatedSprite2D" parent="." unique_id=582421408]
 position = Vector2(0, -76)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_gva7r")
-animation = &"die"
+animation = &"idle"
 autoplay = "idle"
-frame = 11
-frame_progress = 1.0
