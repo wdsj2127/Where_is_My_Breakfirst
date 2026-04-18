@@ -1,2 +1,2 @@
-# Where-s-My-Breakfirst
+# Where is My Breakfirst
 Our first gamejam here.
