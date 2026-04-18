@@ -1,0 +1,178 @@
+[gd_scene format=3 uid="uid://cpx2lktas4oa"]
+
+[ext_resource type="Script" uid="uid://bbpbf31rcutly" path="res://Character/Player/player_move.gd" id="1_vnk41"]
+[ext_resource type="Texture2D" uid="uid://devctig6nccxg" path="res://Character/Player/人物动画/站立1.png" id="2_2h1g1"]
+[ext_resource type="Texture2D" uid="uid://beib3nj31saaf" path="res://Character/Player/人物动画/死亡1.png" id="2_xrppt"]
+[ext_resource type="Texture2D" uid="uid://cbi6q5pkd2rja" path="res://Character/Player/人物动画/死亡2.png" id="3_0fghp"]
+[ext_resource type="Texture2D" uid="uid://cvybjdjy0541d" path="res://Character/Player/人物动画/站立2.png" id="3_7t67c"]
+[ext_resource type="Texture2D" uid="uid://7uxqsmsgjlpx" path="res://Character/Player/人物动画/死亡3.png" id="4_38v4x"]
+[ext_resource type="Texture2D" uid="uid://doful73d4rv3w" path="res://Character/Player/人物动画/死亡4.png" id="5_sxj1f"]
+[ext_resource type="Texture2D" uid="uid://bhljp0xgq1xyw" path="res://Character/Player/人物动画/死亡5.png" id="6_86lbg"]
+[ext_resource type="Texture2D" uid="uid://c5rljl0g0wrsb" path="res://Character/Player/人物动画/死亡6.png" id="7_jvdr1"]
+[ext_resource type="Texture2D" uid="uid://kif6hevoj4dl" path="res://Character/Player/人物动画/死亡7.png" id="8_67w1e"]
+[ext_resource type="Texture2D" uid="uid://c4nthdues5bx5" path="res://Character/Player/人物动画/死亡8.png" id="9_b8syk"]
+[ext_resource type="Texture2D" uid="uid://dywpuarc313c6" path="res://Character/Player/人物动画/死亡9.png" id="10_kv7vn"]
+[ext_resource type="Texture2D" uid="uid://cj1bdpr5aeqwe" path="res://Character/Player/人物动画/死亡10.png" id="11_o5w60"]
+[ext_resource type="Texture2D" uid="uid://dboxgawjimijs" path="res://Character/Player/人物动画/死亡11.png" id="12_jp6uv"]
+[ext_resource type="Texture2D" uid="uid://y44uwpvvwtwn" path="res://Character/Player/人物动画/死亡12.png" id="13_l4oua"]
+[ext_resource type="Texture2D" uid="uid://brhfyjw3sam25" path="res://Character/Player/人物动画/挖掘1.png" id="14_cjoph"]
+[ext_resource type="Texture2D" uid="uid://dtoigtun0jckn" path="res://Character/Player/人物动画/挖掘3.png" id="15_6r7i5"]
+[ext_resource type="Texture2D" uid="uid://bferm0i0ovyyu" path="res://Character/Player/人物动画/挖掘2.png" id="16_40bmt"]
+[ext_resource type="Texture2D" uid="uid://conytarb8fmrc" path="res://Character/Player/人物动画/挖掘4.png" id="17_6ns8h"]
+[ext_resource type="Texture2D" uid="uid://dvlhs2mppcvlk" path="res://Character/Player/人物动画/落体1.png" id="18_jvdr1"]
+[ext_resource type="Texture2D" uid="uid://cp5sw4y3lglnt" path="res://Character/Player/人物动画/获得1.png" id="18_nndvf"]
+[ext_resource type="Texture2D" uid="uid://br6aikocwmtmo" path="res://Character/Player/人物动画/获得2.png" id="19_0ub70"]
+[ext_resource type="Texture2D" uid="uid://rxvl1b3m4bp4" path="res://Character/Player/人物动画/落体2.png" id="19_67w1e"]
+[ext_resource type="Texture2D" uid="uid://cimkgmmmhe3r2" path="res://Character/Player/人物动画/落体3.png" id="20_b8syk"]
+[ext_resource type="Texture2D" uid="uid://3e8njkkxxyqo" path="res://Character/Player/人物动画/起飞1.png" id="22_38v4x"]
+[ext_resource type="Texture2D" uid="uid://bx4omy5cnbn6p" path="res://Character/Player/人物动画/跑步1.png" id="22_s5221"]
+[ext_resource type="Texture2D" uid="uid://wn034hurm52n" path="res://Character/Player/人物动画/跑步2.png" id="23_6ty1a"]
+[ext_resource type="Texture2D" uid="uid://sgmuhppv6rjy" path="res://Character/Player/人物动画/起飞2.png" id="23_sxj1f"]
+[ext_resource type="Texture2D" uid="uid://dmqtseou8x43t" path="res://Character/Player/人物动画/跑步3.png" id="24_7xfb3"]
+[ext_resource type="Texture2D" uid="uid://t2sk0baxxq7m" path="res://Character/Player/人物动画/跑步4.png" id="25_3knl1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vnk41"]
+radius = 39.0
+height = 136.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gva7r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_xrppt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_0fghp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_38v4x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_sxj1f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_86lbg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jvdr1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_67w1e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_b8syk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_kv7vn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_o5w60")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_jp6uv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_l4oua")
+}],
+"loop": false,
+"name": &"die",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_cjoph")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_40bmt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_6r7i5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_6ns8h")
+}],
+"loop": true,
+"name": &"dig",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_jvdr1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_67w1e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_b8syk")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_nndvf")
+}, {
+"duration": 2.0,
+"texture": ExtResource("19_0ub70")
+}],
+"loop": false,
+"name": &"get",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2h1g1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7t67c")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_38v4x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_sxj1f")
+}],
+"loop": true,
+"name": &"lift",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_s5221")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_6ty1a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_7xfb3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_3knl1")
+}],
+"loop": true,
+"name": &"run",
+"speed": 6.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1732956255 node_paths=PackedStringArray("animated_sprite_2d")]
+script = ExtResource("1_vnk41")
+animated_sprite_2d = NodePath("AnimatedSprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2011810208]
+position = Vector2(0, -69)
+shape = SubResource("CapsuleShape2D_vnk41")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=582421408]
+position = Vector2(0, -76)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_gva7r")
+animation = &"die"
+autoplay = "idle"
+frame = 11
+frame_progress = 1.0
