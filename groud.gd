@@ -1,0 +1,137 @@
+extends TileMapLayer
+
+
+const WIDTH = 50
+const HEIGHT = 25
+
+enum TileID {
+	AIR = -1,
+	BEDROCK = 0,
+	DIRT = 1,
+	STONE = 2
+}
+
+# ===== 根据你的 TileSet 实际配置修改这里 =====
+# 每个方块对应的 source_id（图集源 ID）
+const TILE_SOURCE = {
+	TileID.BEDROCK: 0,   # 假设基岩是第一个源
+	TileID.DIRT: 1,      # 泥土是第二个源
+	TileID.STONE: 2      # 石头是第三个源
+}
+
+# 每个方块在其源内的随机变体坐标（4个）
+const TILE_VARIANTS = {
+	TileID.BEDROCK: [Vector2i(0,0), Vector2i(1,0), Vector2i(0,1), Vector2i(1,1)],
+	TileID.DIRT:    [Vector2i(0,0), Vector2i(1,0), Vector2i(0,1), Vector2i(1,1)],
+	TileID.STONE:   [Vector2i(0,0), Vector2i(1,0), Vector2i(0,1), Vector2i(1,1)]
+}
+# ===========================================
+
+var map_data: Array = []
+
+func _ready():
+	if not tile_set:
+		print("错误：TileSet 未设置")
+		return
+	generate_map_data()
+	render_map()
+
+func generate_map_data():
+	randomize()
+	var noise = FastNoiseLite.new()
+	noise.seed = randi()
+	noise.frequency = 0.3
+
+	map_data.clear()
+	for y in range(HEIGHT):
+		var row = []
+		for x in range(WIDTH):
+			# 顶部两行空气
+			if y < 2:
+				row.append(TileID.AIR)
+				continue
+
+			var n = noise.get_noise_2d(x, y)
+			var noise_val = (n + 1) / 2.0
+			var depth = float(y - 2) / (HEIGHT - 2)
+
+			var tile = TileID.AIR
+
+			# 基岩：深度 > 0.85 且噪声值 < 0.2（低概率）
+			if depth > 0.85 and noise_val < 0.3:
+				tile = TileID.BEDROCK
+			# 石头：深度 > 0.4 且不是基岩
+			elif depth > 0.4:
+				tile = TileID.STONE
+			# 泥土：其余区域
+			else:
+				tile = TileID.DIRT
+
+			# 在交界处增加一些混合
+			if tile == TileID.STONE and depth < 0.5 and randf() < 0.3:
+				tile = TileID.DIRT
+			if tile == TileID.DIRT and depth > 0.6 and randf() < 0.4:
+				tile = TileID.STONE
+
+			row.append(tile)
+		map_data.append(row)
+
+	# 统计调试
+	var counts = {TileID.DIRT:0, TileID.STONE:0, TileID.BEDROCK:0}
+	for y in range(HEIGHT):
+		for x in range(WIDTH):
+			var t = map_data[y][x]
+			if t in counts:
+				counts[t] += 1
+	print("生成统计 -> 泥土: %d, 石头: %d, 基岩: %d" % [counts[TileID.DIRT], counts[TileID.STONE], counts[TileID.BEDROCK]])
+
+func render_map():
+	print("开始渲染...")
+	var total = 0
+	for y in range(HEIGHT):
+		if y < 2:
+			continue
+		for x in range(WIDTH):
+			var tile = map_data[y][x]
+			if tile != TileID.AIR:
+				var source_id = TILE_SOURCE[tile]
+				var variants = TILE_VARIANTS[tile]
+				var atlas_coords = variants[randi() % variants.size()]
+				set_cell(Vector2i(x, y), source_id, atlas_coords)
+				total += 1
+	print("渲染完成，共放置 %d 个瓦片" % total)
+
+
+
+
+var is_pressing: bool = false
+var target_cell: Vector2i = Vector2i(-1, -1)
+var press_time: float = 0.0
+const NEED_TIME: float = 3.0
+
+func _input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			# 左键按下：获取鼠标下的格子
+			var mouse_global = get_global_mouse_position()
+			var mouse_local = to_local(mouse_global)
+			var cell = local_to_map(mouse_local)
+			
+			# 只处理有方块的位置（非空气）
+			if get_cell_source_id(cell) != -1:
+				is_pressing = true
+				target_cell = cell
+				press_time = 0.0
+		else:
+			# 左键松开：取消挖掘
+			is_pressing = false
+			target_cell = Vector2i(-1, -1)
+
+func _process(delta):
+	if is_pressing:
+		press_time += delta
+		if press_time >= NEED_TIME:
+			# 消除方块（变成空气）
+			erase_cell(target_cell)
+			is_pressing = false
+			print("方块已消除：", target_cell)
