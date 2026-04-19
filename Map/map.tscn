@@ -29,7 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://bh8kevt344sed" path="res://Map/Texture/水管材质/水管拐弯1.png" id="24_43pbm"]
 [ext_resource type="Texture2D" uid="uid://v5ercl5dwyul" path="res://Map/Texture/水管材质/水管拐弯2.png" id="25_05gka"]
 [ext_resource type="Texture2D" uid="uid://dmgr7f6r2hduw" path="res://Map/Texture/up_groung.png" id="29_tlkso"]
-[ext_resource type="Script" uid="uid://fogmap001" path="res://Map/fog_map_maker.gd" id="30_fogmap"]
+[ext_resource type="Script" path="res://Map/fog_map_maker.gd" id="30_fogmap"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8svjd"]
 texture = ExtResource("1_6yc6o")

@@ -49,8 +49,11 @@ func init_fog() -> void:
 	_fog_sprite.centered = false
 	var cell_world_size: float = 32.0 * solid_map.scale.x
 	_fog_sprite.scale = Vector2(cell_world_size, cell_world_size)
+	# 图像(0,0)对齐格子(-HALF_WIDTH, 0)的左上角世界位置
 	var origin_cell := Vector2i(-map.HALF_WIDTH, 0)
-	_fog_sprite.global_position = solid_map.to_global(solid_map.map_to_local(origin_cell))
+	var cell_center := solid_map.to_global(solid_map.map_to_local(origin_cell))
+	var half_cell: float = 16.0 * solid_map.scale.x
+	_fog_sprite.global_position = cell_center - Vector2(half_cell, half_cell)
 	solid_map.get_parent().add_child(_fog_sprite)
 
 	_ensure_player_glow()
@@ -163,7 +166,7 @@ func _ensure_player_glow() -> void:
 func _create_light_texture() -> GradientTexture2D:
 	var gradient := Gradient.new()
 	gradient.offsets = PackedFloat32Array([0.0, 0.4, 1.0])
-	gradient.colors = PackedColorArray(Color.WHITE, Color.WHITE, Color.TRANSPARENT)
+	gradient.colors = [Color.WHITE, Color.WHITE, Color.TRANSPARENT]
 	var tex := GradientTexture2D.new()
 	tex.gradient = gradient
 	tex.fill = GradientTexture2D.FILL_RADIAL

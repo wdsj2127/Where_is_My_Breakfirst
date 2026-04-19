@@ -42,7 +42,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	fog_map.request_update()
+	fog_map.update_fog()
 
 
 ## 处理玩家挖掘请求，转发给SolidMap
