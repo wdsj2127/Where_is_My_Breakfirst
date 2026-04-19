@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://c8woo0a1380jp"]
+
+[ext_resource type="Script" uid="uid://dlgefi1ftxgri" path="res://Character/Player/character_body_2d.gd" id="1_dgeqi"]
+[ext_resource type="Script" uid="uid://btknsejkfjvkk" path="res://Character/Player/sprite_2d.gd" id="2_12did"]
+
+[sub_resource type="MeshTexture" id="MeshTexture_dgeqi"]
+image_size = Vector2(5, 5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dgeqi"]
+radius = 20.0
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1977418404]
+light_mask = 8
+up_direction = Vector2(0, 1)
+z_index = 100
+script = ExtResource("1_dgeqi")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1184519780]
+texture = SubResource("MeshTexture_dgeqi")
+z_index = 100
+script = ExtResource("2_12did")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1441043763]
+position = Vector2(0, -69)
+shape = SubResource("CircleShape2D_dgeqi")

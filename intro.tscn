@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://intro_scene_uid"]
+
+[ext_resource type="PackedScene" uid="uid://t3b74kpmut61" path="res://UI/Start/start.tscn" id="1_start"]
+
+[node name="Intro" type="Node2D"]
+
+[node name="StartAnimation" parent="." instance=ExtResource("1_start")]

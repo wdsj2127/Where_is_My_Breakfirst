@@ -1,0 +1,160 @@
+[gd_scene format=3 uid="uid://c4o2j8hdvaxwg"]
+
+[ext_resource type="PackedScene" uid="uid://cpx2lktas4oa" path="res://Character/Player/player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://1i57myj1tuxa" path="res://Map/map.tscn" id="2_map"]
+[ext_resource type="Script" uid="uid://35vewyi28cv0" path="res://gpu_particles_2d.gd" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://ch4xsqtqllycs" path="res://UI/Game/camera.gd" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://vc5h1fqyc5r4" path="res://progress_bar.gd" id="5_lquwl"]
+
+[sub_resource type="FontFile" id="FontFile_h2yge"]
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/28/0/ascent = 0.0
+cache/0/28/0/descent = 0.0
+cache/0/28/0/underline_position = 0.0
+cache/0/28/0/underline_thickness = 0.0
+cache/0/28/0/scale = 1.0
+
+[sub_resource type="Theme" id="Theme_1bvp3"]
+default_font = SubResource("FontFile_h2yge")
+
+[sub_resource type="QuadMesh" id="QuadMesh_h2yge"]
+
+[sub_resource type="MeshTexture" id="MeshTexture_1bvp3"]
+mesh = SubResource("QuadMesh_h2yge")
+image_size = Vector2(5, 5)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lquwl"]
+particle_flag_disable_z = true
+particle_flag_damping_as_friction = true
+spread = 180.0
+angular_velocity_min = -132.16002
+angular_velocity_max = 195.94998
+radial_velocity_min = -2.2351742e-05
+radial_velocity_max = 316.45996
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -100.0
+linear_accel_max = -100.0
+radial_accel_min = -100.0
+radial_accel_max = -100.0
+damping_min = 93.98701
+damping_max = 93.98701
+
+[sub_resource type="Gradient" id="Gradient_h2yge"]
+offsets = PackedFloat32Array(0.5, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1bvp3"]
+gradient = SubResource("Gradient_h2yge")
+fill = 1
+metadata/_snap_count = 32
+
+[sub_resource type="Theme" id="Theme_7mycd"]
+
+[node name="Main" type="Node2D" unique_id=1615770809]
+
+[node name="Camera" type="Camera2D" parent="." unique_id=358579000 node_paths=PackedStringArray("target")]
+position = Vector2(4, -65)
+script = ExtResource("3_h2yge")
+target = NodePath("../Player")
+
+[node name="ColorRect" type="ColorRect" parent="Camera" unique_id=253311775]
+custom_minimum_size = Vector2(1920, 1080)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera" unique_id=723095185]
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Camera/CanvasLayer" unique_id=28373097]
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_1bvp3")
+
+[node name="Map" parent="." unique_id=652793352 instance=ExtResource("2_map")]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Map" unique_id=1759177269]
+modulate = Color(1, 1, 0.50980395, 1)
+amount = 20000
+texture = SubResource("MeshTexture_1bvp3")
+lifetime = 29.21
+randomness = 1.0
+use_fixed_seed = true
+seed = 4271562938
+process_material = SubResource("ParticleProcessMaterial_lquwl")
+script = ExtResource("3_1bvp3")
+
+[node name="Player" parent="." unique_id=1950094892 instance=ExtResource("1_ig7tw")]
+
+[node name="LightRightdown" type="PointLight2D" parent="Player" unique_id=144758363]
+position = Vector2(192.00002, 127)
+scale = Vector2(6, 6)
+texture = SubResource("GradientTexture2D_1bvp3")
+
+[node name="LightRightup" type="PointLight2D" parent="Player" unique_id=1049999929]
+position = Vector2(192.00002, -257)
+rotation = 4.712389
+scale = Vector2(6, 6)
+texture = SubResource("GradientTexture2D_1bvp3")
+
+[node name="LightLeftdown" type="PointLight2D" parent="Player" unique_id=160666949]
+position = Vector2(-192, 127)
+rotation = 1.5707964
+scale = Vector2(6, 6)
+texture = SubResource("GradientTexture2D_1bvp3")
+
+[node name="LightLeftup" type="PointLight2D" parent="Player" unique_id=398946674]
+position = Vector2(-192.00002, -257)
+rotation = 3.1415927
+scale = Vector2(6, 6)
+texture = SubResource("GradientTexture2D_1bvp3")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Player" unique_id=1800081546]
+
+[node name="ProgressBar" type="ProgressBar" parent="Player/CanvasLayer" unique_id=2045337759]
+custom_minimum_size = Vector2(400, 1)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -200.0
+offset_right = 200.0
+offset_bottom = 27.0
+grow_horizontal = 2
+theme = SubResource("Theme_7mycd")
+theme_override_colors/font_color = Color(0.4862745, 0.9490196, 0.47058824, 1)
+theme_override_colors/font_outline_color = Color(0, 0.7607843, 0, 1)
+step = 1.0
+value = 100.0
+fill_mode = 1
+script = ExtResource("5_lquwl")
+
+[node name="Label" type="Label" parent="Player/CanvasLayer/ProgressBar" unique_id=362504278]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1181421809]
+color = Color(0.13333334, 0.13333334, 0.13333334, 1)
+
+[connection signal="dig_cancelled" from="Player" to="Map" method="_on_dig_cancelled"]
+[connection signal="dig_requested" from="Player" to="Map" method="_on_dig_requested"]
