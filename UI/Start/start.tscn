@@ -1,0 +1,115 @@
+[gd_scene format=3 uid="uid://t3b74kpmut61"]
+
+[ext_resource type="Texture2D" uid="uid://bjxj2xhvyq1gg" path="res://UI/Start/开屏小动画/开屏一1.png" id="1_ccn1h"]
+[ext_resource type="Texture2D" uid="uid://dpipr5arusgyf" path="res://UI/Start/开屏小动画/开屏一2.png" id="2_v3o0x"]
+[ext_resource type="Texture2D" uid="uid://vr06g2oba3u5" path="res://UI/Start/开屏小动画/开屏一3.png" id="3_7f2rp"]
+[ext_resource type="Texture2D" uid="uid://dghqyoinggcag" path="res://UI/Start/开屏小动画/开屏一4.png" id="4_np4jr"]
+[ext_resource type="Texture2D" uid="uid://dr7itpf1uujup" path="res://UI/Start/开屏小动画/开屏一5.png" id="5_fl4co"]
+[ext_resource type="Texture2D" uid="uid://80nswbixm1qj" path="res://UI/Start/开屏小动画/开屏一6.png" id="6_ux7yp"]
+[ext_resource type="Texture2D" uid="uid://bwr62gvtr4ory" path="res://UI/Start/开屏小动画/开屏一7.png" id="7_b4du8"]
+[ext_resource type="Texture2D" uid="uid://d24m37ybf8mhw" path="res://UI/Start/开屏小动画/开屏一8.png" id="8_h26xv"]
+[ext_resource type="Texture2D" uid="uid://bxliabtgpawmb" path="res://UI/Start/开屏小动画/开屏一9.png" id="9_kj6ds"]
+[ext_resource type="Texture2D" uid="uid://cjfv6jtghg066" path="res://UI/Start/开屏小动画/开屏二1.png" id="10_gfgo6"]
+[ext_resource type="Texture2D" uid="uid://c5ai71mfltto0" path="res://UI/Start/开屏小动画/开屏二2.png" id="11_obwce"]
+[ext_resource type="Texture2D" uid="uid://dafa3k2l0sofu" path="res://UI/Start/开屏小动画/开屏二3.png" id="12_wt5b7"]
+[ext_resource type="Texture2D" uid="uid://6dfv4otbnyl6" path="res://UI/Start/开屏小动画/开屏二4.png" id="13_culme"]
+[ext_resource type="Texture2D" uid="uid://b32te6lwrm08x" path="res://UI/Start/开屏小动画/开屏二5.png" id="14_ce57j"]
+[ext_resource type="Texture2D" uid="uid://88ewkuhglpxy" path="res://UI/Start/开屏小动画/开屏二6.png" id="15_ipske"]
+[ext_resource type="Texture2D" uid="uid://frlxra5tncq5" path="res://UI/Start/开屏小动画/开屏二7.png" id="16_lgwdp"]
+[ext_resource type="Texture2D" uid="uid://bt7m2uwckku1l" path="res://UI/Start/开屏小动画/开屏二8.png" id="17_6fm4x"]
+[ext_resource type="Texture2D" uid="uid://dr8hbn6qthxtx" path="res://UI/Start/开屏小动画/开屏二9.png" id="18_euitf"]
+[ext_resource type="Texture2D" uid="uid://m2wdagi752as" path="res://UI/Start/开屏小动画/开屏二10.png" id="19_b6eln"]
+[ext_resource type="Texture2D" uid="uid://01q84vnqb845" path="res://UI/Start/开屏小动画/开屏二11.png" id="20_qnrtb"]
+[ext_resource type="Texture2D" uid="uid://c0ql8uys74arf" path="res://UI/Start/开屏小动画/开屏二12.png" id="21_ancck"]
+[ext_resource type="Script" uid="uid://cgqaafkh6q3cd" path="res://UI/Start/start_anim.gd" id="22_v3o0x"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_e8h8p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ccn1h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_v3o0x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7f2rp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_np4jr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_fl4co")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_ux7yp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_b4du8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_h26xv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_kj6ds")
+}],
+"loop": true,
+"name": &"0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_wt5b7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_culme")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ce57j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_ipske")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_lgwdp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_6fm4x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_euitf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_b6eln")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_qnrtb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_ancck")
+}],
+"loop": true,
+"name": &"1_loop",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_gfgo6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_obwce")
+}],
+"loop": false,
+"name": &"1_start",
+"speed": 6.0
+}]
+
+[node name="Start" type="Node2D" unique_id=1783485809]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1683689180]
+scale = Vector2(1.52, 1.52)
+sprite_frames = SubResource("SpriteFrames_e8h8p")
+animation = &"1_loop"
+script = ExtResource("22_v3o0x")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1892868606]

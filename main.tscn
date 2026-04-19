@@ -1,26 +1,14 @@
 [gd_scene format=3 uid="uid://c4o2j8hdvaxwg"]
 
 [ext_resource type="PackedScene" uid="uid://cpx2lktas4oa" path="res://Character/Player/player.tscn" id="1_ig7tw"]
-[ext_resource type="Texture2D" uid="uid://cwmcabh4p52wl" path="res://icon.svg" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://1i57myj1tuxa" path="res://Map/map.tscn" id="2_map"]
 [ext_resource type="Script" uid="uid://ch4xsqtqllycs" path="res://UI/camera.gd" id="3_h2yge"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
-size = Vector2(128.00005, 128.00003)
+[node name="Main" type="Node2D" unique_id=1615770809]
 
-[node name="main" type="Node2D" unique_id=1615770809]
+[node name="Map" parent="." unique_id=652793352 instance=ExtResource("2_map")]
 
 [node name="Player" parent="." unique_id=1950094892 instance=ExtResource("1_ig7tw")]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1528543782]
-position = Vector2(0, 320)
-scale = Vector2(5, 5)
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1540093724]
-texture = ExtResource("2_0xm2m")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1663598060]
-scale = Vector2(0.99999976, 0.99999976)
-shape = SubResource("RectangleShape2D_h2yge")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=358579000 node_paths=PackedStringArray("target")]
 script = ExtResource("3_h2yge")
