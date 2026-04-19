@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjcqicrhyxfqn"
-path="res://.godot/imported/泥土裂纹3.png-2e2380c200e697ded806500b1aebdce7.ctex"
+uid="uid://c3vffqj0qd0ux"
+path="res://.godot/imported/泥土下连.png-a5bb77b9d893d8c50fcf6ad1af66df63.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Map/裂纹/泥土裂纹3.png"
-dest_files=["res://.godot/imported/泥土裂纹3.png-2e2380c200e697ded806500b1aebdce7.ctex"]
+source_file="res://Map/Texture/SolidTexture/泥土下连.png"
+dest_files=["res://.godot/imported/泥土下连.png-a5bb77b9d893d8c50fcf6ad1af66df63.ctex"]
 
 [params]
 

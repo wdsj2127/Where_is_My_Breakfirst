@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csdbjdupbsyav"
-path="res://.godot/imported/岩石裂纹3.png-2cd6176bf41353e5077fb543a99d08e5.ctex"
+uid="uid://ufki0kjka2hm"
+path="res://.godot/imported/岩石四向.png-08487560588ce58e5ef3d1744549b357.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Map/裂纹/岩石裂纹3.png"
-dest_files=["res://.godot/imported/岩石裂纹3.png-2cd6176bf41353e5077fb543a99d08e5.ctex"]
+source_file="res://Map/Texture/SolidTexture/岩石四向.png"
+dest_files=["res://.godot/imported/岩石四向.png-08487560588ce58e5ef3d1744549b357.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bswb1ocjqi1w3"
-path="res://.godot/imported/岩石裂纹1.png-b4929562f77b61e42478b97fddf44c19.ctex"
+uid="uid://cja6gf5qw80lx"
+path="res://.godot/imported/水管始末.png-eb912851eae55930e363bba476ce3a32.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Map/裂纹/岩石裂纹1.png"
-dest_files=["res://.godot/imported/岩石裂纹1.png-b4929562f77b61e42478b97fddf44c19.ctex"]
+source_file="res://Map/Texture/水管材质/水管始末.png"
+dest_files=["res://.godot/imported/水管始末.png-eb912851eae55930e363bba476ce3a32.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dkxhdq32ccam3"
-path="res://.godot/imported/泥土.png-ad70c33e1240874a8de50b1beac6bb00.ctex"
+uid="uid://dmgr7f6r2hduw"
+path="res://.godot/imported/up_groung.png-cdaa1f4798daab4546d5def182f0bca2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Map/MapTexture/泥土.png"
-dest_files=["res://.godot/imported/泥土.png-ad70c33e1240874a8de50b1beac6bb00.ctex"]
+source_file="res://Map/Texture/up_groung.png"
+dest_files=["res://.godot/imported/up_groung.png-cdaa1f4798daab4546d5def182f0bca2.ctex"]
 
 [params]
 

@@ -32,7 +32,7 @@
 [ext_resource type="Texture2D" uid="uid://t2sk0baxxq7m" path="res://Character/Player/人物动画/跑步4.png" id="25_3knl1"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vnk41"]
-radius = 39.0
+radius = 21.0
 height = 136.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gva7r"]
