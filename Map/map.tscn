@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://1d4lkpj1dawg" path="res://Map/MapTexture/地基.png" id="1_6yc6o"]
 [ext_resource type="Texture2D" uid="uid://dmiu6orlti3nf" path="res://Map/MapTexture/岩石.png" id="2_86j4t"]
 [ext_resource type="Texture2D" uid="uid://dkxhdq32ccam3" path="res://Map/MapTexture/泥土.png" id="3_8svjd"]
-[ext_resource type="Script" uid="uid://cc3rhtdaahnl3" path="res://Map/tile_map_maker.gd" id="4_86j4t"]
+[ext_resource type="Script" uid="uid://cc3rhtdaahnl3" path="res://Map/solid_map_maker.gd" id="4_86j4t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8svjd"]
 texture = ExtResource("1_6yc6o")
@@ -112,9 +112,15 @@ sources/0 = SubResource("TileSetAtlasSource_8svjd")
 sources/1 = SubResource("TileSetAtlasSource_3g1qk")
 sources/2 = SubResource("TileSetAtlasSource_d1580")
 
+[sub_resource type="TileSet" id="TileSet_86j4t"]
+
 [node name="Map" type="Node2D" unique_id=652793352]
 
-[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1659039704]
+[node name="SolidMap" type="TileMapLayer" parent="." unique_id=1659039704]
 scale = Vector2(3, 3)
 tile_set = SubResource("TileSet_5ej7w")
 script = ExtResource("4_86j4t")
+
+[node name="SewerPipe" type="TileMapLayer" parent="." unique_id=936093586]
+scale = Vector2(3, 3)
+tile_set = SubResource("TileSet_86j4t")

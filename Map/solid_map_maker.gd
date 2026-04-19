@@ -6,11 +6,10 @@ enum BlockType { AIR, DIRT, STONE, FOUNDATION, HARD_STONE }
 
 # 地图尺寸
 const WORLD_WIDTH = 32
-const WORLD_HEIGHT = 96
+const WORLD_HEIGHT = 128
 const FOUNDATION_WIDTH = 2  # 左右两侧地基列数
 
 # 泥土/石头混合噪声
-const DIRT_STONE_THRESHOLD = 0.0
 const DIRT_STONE_NOISE_FREQ = 0.08
 
 # 硬石脉噪声
@@ -20,7 +19,7 @@ const HARD_STONE_NOISE_FREQ = 0.12
 # 空腔噪声
 const CAVITY_THRESHOLD = 0.35
 const CAVITY_NOISE_FREQ = 0.09
-const CAVITY_MIN_DEPTH = 10
+const CAVITY_MIN_DEPTH = 15
 
 # TileSet source ID: 0=地基, 1=岩石, 2=泥土
 const _SOURCE_FOUNDATION = 0
@@ -94,9 +93,11 @@ func _fill_base_terrain() -> void:
 			if y == 0:
 				_block_data[y][x] = BlockType.DIRT
 				continue
-			# 地表以下噪声驱动泥土/石头混合
+			# 地表以下噪声驱动泥土/石头混合，越深石头越多
+			var depth_ratio := float(y) / WORLD_HEIGHT
+			var threshold := lerpf(0.15, -0.5, depth_ratio)
 			var noise_val := _dirt_stone_noise.get_noise_2d(x, y)
-			_block_data[y][x] = BlockType.STONE if noise_val > DIRT_STONE_THRESHOLD else BlockType.DIRT
+			_block_data[y][x] = BlockType.STONE if noise_val > threshold else BlockType.DIRT
 
 
 ## 噪声驱动硬石脉生成，地表5格以下出现
