@@ -1,6 +1,19 @@
-extends TileMapLayer
+# ============================================================
+# back_map_maker.gd - 背景地图层（BackMap）
+# ============================================================
+# 功能：与SolidMap共享噪声种子的背景地形，空腔更小，无碰撞，偏暗显示
+# 方法：
+#   _ready()                                  - 初始化map引用，禁用碰撞
+#   _generate_back_world()                    - 生成背景世界（由map_controller调用）
+#   _render_to_tilemap()                      - 将地块数据渲染到TileMapLayer
+#   _get_dirt_render(x, y) -> Array           - 泥土渲染选择
+#   _get_stone_render(x, y) -> Array          - 岩石渲染选择
+#   _pick_connect_source(...) -> int          - 连接材质选择
+#   _get_atlas_coords(x, y, type) -> Vector2i - 3x3图集坐标
+#   _is_same_type(x, y, type) -> bool         - 判断是否为指定类型
+# ============================================================
 
-## 背景地图：与SolidMap共享噪声种子，空腔更小，无碰撞，偏暗
+extends TileMapLayer
 
 @export var solid_map: TileMapLayer
 
@@ -29,12 +42,14 @@ var map: Node2D  # Map根节点，提供常量
 var _block_data = []
 
 
+## 初始化：缓存map引用，禁用碰撞
 func _ready() -> void:
 	map = get_parent()
 	collision_enabled = false
 
 
-## 生成背景世界：复用SolidMap的噪声，空腔阈值更高
+## 生成背景世界：复用SolidMap的噪声，空腔阈值更高（空腔更小）
+## 由map_controller在SolidMap生成完毕后调用
 func _generate_back_world() -> void:
 	var sm := solid_map
 	var w: int = map.WORLD_WIDTH
@@ -73,7 +88,7 @@ func _generate_back_world() -> void:
 	_render_to_tilemap()
 
 
-## 将地块数据渲染到TileMapLayer
+## 将地块数据渲染到TileMapLayer（x偏移-HALF_WIDTH）
 func _render_to_tilemap() -> void:
 	clear()
 	var w: int = map.WORLD_WIDTH
@@ -86,12 +101,8 @@ func _render_to_tilemap() -> void:
 			var source_id: int
 			var atlas_coords := Vector2i(0, 0)
 			match block_type:
-				BlockType.DIRT:
-					var result := _get_dirt_render(x, y)
-					source_id = result[0]
-					atlas_coords = result[1]
-				BlockType.STONE:
-					var result := _get_stone_render(x, y)
+				BlockType.DIRT, BlockType.STONE:
+					var result := _get_block_render(x, y, block_type)
 					source_id = result[0]
 					atlas_coords = result[1]
 				BlockType.FOUNDATION:
@@ -101,33 +112,26 @@ func _render_to_tilemap() -> void:
 			set_cell(Vector2i(x - map.HALF_WIDTH, y), source_id, atlas_coords, 0)
 
 
-## 泥土渲染
-func _get_dirt_render(x: int, y: int) -> Array:
-	var same_u := _is_same_type(x, y - 1, BlockType.DIRT)
-	var same_d := _is_same_type(x, y + 1, BlockType.DIRT)
-	var same_l := _is_same_type(x - 1, y, BlockType.DIRT)
-	var same_r := _is_same_type(x + 1, y, BlockType.DIRT)
+## 地块渲染：根据邻居同类型情况选择连接材质或图集坐标
+## 参数 x: 数组索引x  参数 y: 数组索引y  参数 block_type: DIRT或STONE
+## 返回: [source_id, atlas_coords]
+func _get_block_render(x: int, y: int, block_type: int) -> Array:
+	var same_u := _is_same_type(x, y - 1, block_type)
+	var same_d := _is_same_type(x, y + 1, block_type)
+	var same_l := _is_same_type(x - 1, y, block_type)
+	var same_r := _is_same_type(x + 1, y, block_type)
+	var ids: Array = [_DIRT_UD, _DIRT_U, _DIRT_D, _DIRT_R, _DIRT_CROSS, _DIRT_LR, _DIRT_L, _SOURCE_DIRT] \
+		if block_type == BlockType.DIRT \
+		else [_STONE_UD, _STONE_U, _STONE_D, _STONE_R, _STONE_CROSS, _STONE_LR, _STONE_L, _SOURCE_STONE]
 	var source := _pick_connect_source(same_u, same_d, same_l, same_r,
-		_DIRT_UD, _DIRT_U, _DIRT_D, _DIRT_R, _DIRT_CROSS, _DIRT_LR, _DIRT_L)
+		ids[0], ids[1], ids[2], ids[3], ids[4], ids[5], ids[6])
 	if source >= 0:
 		return [source, Vector2i(0, 0)]
-	return [_SOURCE_DIRT, _get_atlas_coords(x, y, BlockType.DIRT)]
+	return [ids[7], _get_atlas_coords(x, y, block_type)]
 
 
-## 岩石渲染
-func _get_stone_render(x: int, y: int) -> Array:
-	var same_u := _is_same_type(x, y - 1, BlockType.STONE)
-	var same_d := _is_same_type(x, y + 1, BlockType.STONE)
-	var same_l := _is_same_type(x - 1, y, BlockType.STONE)
-	var same_r := _is_same_type(x + 1, y, BlockType.STONE)
-	var source := _pick_connect_source(same_u, same_d, same_l, same_r,
-		_STONE_UD, _STONE_U, _STONE_D, _STONE_R, _STONE_CROSS, _STONE_LR, _STONE_L)
-	if source >= 0:
-		return [source, Vector2i(0, 0)]
-	return [_SOURCE_STONE, _get_atlas_coords(x, y, BlockType.STONE)]
-
-
-## 连接材质选择
+## 连接材质选择：根据上下左右同类型邻居选择对应连接贴图
+## 返回: source ID，-1表示无匹配需用图集
 func _pick_connect_source(same_u: bool, same_d: bool, same_l: bool, same_r: bool,
 		s_ud: int, s_u: int, s_d: int, s_r: int, s_cross: int, s_lr: int, s_l: int) -> int:
 	if not same_u and not same_d and not same_l and not same_r:
@@ -147,7 +151,9 @@ func _pick_connect_source(same_u: bool, same_d: bool, same_l: bool, same_r: bool
 	return -1
 
 
-## 3x3图集坐标
+## 3x3图集坐标：根据邻居分布选择图集中的子图位置
+## 参数 x: 数组索引x  参数 y: 数组索引y  参数 block_type: 地块类型
+## 返回: 图集坐标Vector2i
 func _get_atlas_coords(x: int, y: int, block_type: int) -> Vector2i:
 	var has_top := _is_same_type(x, y - 1, block_type)
 	var has_bottom := _is_same_type(x, y + 1, block_type)
@@ -175,6 +181,8 @@ func _get_atlas_coords(x: int, y: int, block_type: int) -> Vector2i:
 
 
 ## 判断坐标处是否为指定类型
+## 参数 x: 数组索引x  参数 y: 数组索引y  参数 block_type: 目标类型
+## 返回: 是否匹配
 func _is_same_type(x: int, y: int, block_type: int) -> bool:
 	if x < 0 or x >= map.WORLD_WIDTH or y < 0 or y >= map.WORLD_HEIGHT:
 		return false

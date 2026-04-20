@@ -4,16 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://1i57myj1tuxa" path="res://Map/map.tscn" id="2_map"]
 [ext_resource type="Script" uid="uid://ch4xsqtqllycs" path="res://UI/Game/camera.gd" id="3_h2yge"]
 
-[sub_resource type="Gradient" id="Gradient_h2yge"]
-offsets = PackedFloat32Array(0.5, 1)
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
-metadata/_snap_enabled = true
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_1bvp3"]
-gradient = SubResource("Gradient_h2yge")
-fill = 1
-metadata/_snap_count = 32
-
 [node name="Main" type="Node2D" unique_id=1615770809]
 
 [node name="Camera" type="Camera2D" parent="." unique_id=358579000 node_paths=PackedStringArray("target")]
@@ -34,35 +24,14 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Map" parent="." unique_id=652793352 instance=ExtResource("2_map")]
+[node name="Map" parent="." unique_id=652793352 node_paths=PackedStringArray("player") instance=ExtResource("2_map")]
+player = NodePath("../Player")
 
 [node name="Player" parent="." unique_id=1950094892 instance=ExtResource("1_ig7tw")]
 
-[node name="LightRightdown" type="PointLight2D" parent="Player" unique_id=144758363]
-position = Vector2(192.00002, 127)
-scale = Vector2(6, 6)
-texture = SubResource("GradientTexture2D_1bvp3")
-
-[node name="LightRightup" type="PointLight2D" parent="Player" unique_id=1049999929]
-position = Vector2(192.00002, -257)
-rotation = 4.712389
-scale = Vector2(6, 6)
-texture = SubResource("GradientTexture2D_1bvp3")
-
-[node name="LightLeftdown" type="PointLight2D" parent="Player" unique_id=160666949]
-position = Vector2(-192, 127)
-rotation = 1.5707964
-scale = Vector2(6, 6)
-texture = SubResource("GradientTexture2D_1bvp3")
-
-[node name="LightLeftup" type="PointLight2D" parent="Player" unique_id=398946674]
-position = Vector2(-192.00002, -257)
-rotation = 3.1415927
-scale = Vector2(6, 6)
-texture = SubResource("GradientTexture2D_1bvp3")
-
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=1181421809]
-color = Color(0.13333334, 0.13333334, 0.13333334, 1)
 
 [connection signal="dig_cancelled" from="Player" to="Map" method="_on_dig_cancelled"]
 [connection signal="dig_requested" from="Player" to="Map" method="_on_dig_requested"]
+[connection signal="dig_accepted" from="Map/SolidMap" to="Player" method="_on_dig_accepted"]
+[connection signal="dig_target_changed" from="Map/SolidMap" to="Player" method="_on_dig_target_changed"]

@@ -1,3 +1,19 @@
+# ============================================================
+# player_controller.gd - 玩家控制器
+# ============================================================
+# 功能：玩家状态机（IDLE/RUN/LIFT/FALL/DIE/GET/DIG）、
+#       移动/重力/动画控制、挖掘信号发射
+# 方法：
+#   _physics_process(delta)     - 物理帧主循环
+#   _on_dig_accepted()          - 地图接受挖掘请求回调
+#   _on_dig_target_changed(pos) - 挖掘目标切换回调
+#   update_state()              - 更新状态机
+#   _update_movement()          - 更新移动速度
+#   gravity(delta)              - 重力逻辑
+#   update_animation()          - 角色动画
+#   update_oxygen()             - 氧气逻辑（TODO）
+# ============================================================
+
 extends CharacterBody2D
 @export var animated_sprite_2d: AnimatedSprite2D
 
@@ -16,12 +32,12 @@ signal dig_cancelled
 const MAX_OXYGEN = 100
 var oxygen = MAX_OXYGEN
 
-# 上一帧挖掘是否成功（由地图通过 _on_dig_success 回复）
+# 上一帧挖掘请求是否被地图接受
 var _last_dig_ok: bool = false
-# 挖掘期间锁定的朝向
-var _dig_facing_left: bool = false
 
 
+## 物理帧主循环：重置挖掘标志→状态机→重力→移动→碰撞→动画
+## 参数 delta: 帧间隔时间（秒）
 func _physics_process(delta: float) -> void:
 	_last_dig_ok = false
 	update_state()
@@ -31,17 +47,19 @@ func _physics_process(delta: float) -> void:
 	update_animation()
 
 
-## 地图挖掘成功后调用此方法通知玩家
-func _on_dig_success() -> void:
+## 地图接受挖掘请求时回调，设置_last_dig_ok为true
+func _on_dig_accepted() -> void:
 	_last_dig_ok = true
 
 
 ## 挖掘目标方块切换时更新朝向
+## 参数 target_world_pos: 新目标方块的世界中心坐标
 func _on_dig_target_changed(target_world_pos: Vector2) -> void:
-	_dig_facing_left = target_world_pos.x < global_position.x
+	if state == PlayerState.DIG:
+		animated_sprite_2d.flip_h = target_world_pos.x < global_position.x
 
 
-## 更新状态机
+## 更新状态机：处理DIG进入/退出、基础状态判断、LIFT优先级
 func update_state() -> void:
 	var previous_state = state
 	if state == PlayerState.DIE:
@@ -75,13 +93,13 @@ func update_state() -> void:
 		dig_requested.emit(get_global_mouse_position())
 		if _last_dig_ok:
 			state = PlayerState.DIG
-			_dig_facing_left = get_global_mouse_position().x < global_position.x
+			animated_sprite_2d.flip_h = get_global_mouse_position().x < global_position.x
 
 	if previous_state != state:
 		state_changed.emit(state)
 
 
-## 更新移动速度
+## 更新移动速度：DIG时锁定x速度，RUN/IDLE加速，LIFT/FALL正常速度
 func _update_movement() -> void:
 	if state == PlayerState.DIG:
 		velocity.x = 0
@@ -93,7 +111,8 @@ func _update_movement() -> void:
 		velocity.x = Input.get_axis("Left", "Right") * SPEED
 
 
-## 重力逻辑
+## 重力逻辑：FALL下落、着地归零、LIFT上升
+## 参数 delta: 帧间隔时间（秒）
 func gravity(delta: float) -> void:
 	if state == PlayerState.FALL:
 		if velocity.y < GRAVITY:
@@ -115,11 +134,10 @@ func gravity(delta: float) -> void:
 				velocity.y = -MAX_LIFT
 
 
-## 角色动画
+## 角色动画：根据状态播放对应动画，DIG时朝向由flip_h控制
 func update_animation() -> void:
-	if state == PlayerState.DIG:
-		animated_sprite_2d.flip_h = _dig_facing_left
-	else:
+	# DIG状态朝向已在进入状态和_on_dig_target_changed中设置，不覆盖
+	if state != PlayerState.DIG:
 		if velocity.x > 0:
 			animated_sprite_2d.flip_h = false
 		elif velocity.x < 0:

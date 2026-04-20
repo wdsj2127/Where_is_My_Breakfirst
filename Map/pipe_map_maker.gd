@@ -1,7 +1,22 @@
-extends TileMapLayer
+# ============================================================
+# pipe_map_maker.gd - 水管层（SewerPipe）
+# ============================================================
+# 功能：从左右地基向内延伸的水管生成，竖直为主偶尔水平偏移，
+#       支持始末/崭新/接缝/磨损/拐弯贴图选择
+# 方法：
+#   _ready()                                  - 初始化map引用
+#   generate_pipes()                          - 生成水管（由map_controller调用）
+#   _create_noise(seed, freq) -> FastNoiseLite - 创建FBM噪声（静态）
+#   _get_pipe_start_y(index, h) -> int        - 计算第i根水管起始y
+#   _generate_single_pipe(...)                - 生成单根水管路径
+#   _is_valid_pipe_pos(...) -> bool           - 判断坐标是否可用于水管
+#   _render_pipe(path)                        - 渲染单根水管到TileMapLayer
+#   _pick_body_style(x, y) -> int             - 噪声选择水管中间段样式
+#   get_pipe_paths() -> Array                 - 获取所有水管路径
+#   regenerate()                              - 重新生成水管
+# ============================================================
 
-## 水管生成算法：从左右地基向内延伸，竖直为主，偶尔水平偏移
-## 由SolidMap生成完毕后调用
+extends TileMapLayer
 
 @export var solid_map: TileMapLayer
 
@@ -28,12 +43,13 @@ var _pipe_noise: FastNoiseLite
 var _pipe_paths: Array = []
 
 
+## 初始化：缓存map引用，不在此处生成
 func _ready() -> void:
 	map = get_parent()
-	# 不在此处生成，等待SolidMap通知
 
 
-## 由map_controller调用，开始生成水管
+## 生成水管：创建噪声，左右各生成PIPE_COUNT_PER_SIDE根水管
+## 由map_controller在SolidMap生成完毕后调用
 func generate_pipes() -> void:
 	_pipe_noise = _create_noise(randi(), 0.1)
 	clear()
@@ -57,7 +73,9 @@ func generate_pipes() -> void:
 		_generate_single_pipe(w - fw, start_y, -1, w, h, fw)
 
 
-## 创建噪声实例
+## 创建FBM分形噪声实例
+## 参数 seed: 噪声种子  参数 freq: 噪声频率
+## 返回: 配置好的FastNoiseLite实例
 @warning_ignore("shadowed_global_identifier")
 static func _create_noise(seed: int, freq: float) -> FastNoiseLite:
 	var noise := FastNoiseLite.new()
@@ -70,13 +88,17 @@ static func _create_noise(seed: int, freq: float) -> FastNoiseLite:
 	return noise
 
 
-## 计算第i根水管的起始y坐标
+## 计算第i根水管的起始y坐标（等间距分布）
+## 参数 index: 水管序号（0起）  参数 world_height: 地图高度
+## 返回: 起始y坐标
 func _get_pipe_start_y(index: int, world_height: int) -> int:
 	var spacing: int = (world_height - PIPE_MIN_START_DEPTH) / (PIPE_COUNT_PER_SIDE + 1)
 	return PIPE_MIN_START_DEPTH + spacing * (index + 1)
 
 
-## 生成单根水管
+## 生成单根水管：从地基向内水平起步，然后竖直向下偶尔水平偏移
+## 参数 start_x: 起始x  参数 start_y: 起始y  参数 dir_x: 水平方向(1/-1)
+## 参数 world_width/height: 地图尺寸  参数 foundation_width: 地基宽度
 func _generate_single_pipe(start_x: int, start_y: int, dir_x: int, world_width: int, world_height: int, foundation_width: int) -> void:
 	var path: Array = []
 	var x := start_x
@@ -117,7 +139,9 @@ func _generate_single_pipe(start_x: int, start_y: int, dir_x: int, world_width: 
 	_render_pipe(path)
 
 
-## 判断坐标是否可用于水管
+## 判断坐标是否可用于水管（不在地基内、不越界）
+## 参数 x/y: 坐标  参数 world_width/height: 地图尺寸  参数 foundation_width: 地基宽度
+## 返回: 是否合法
 func _is_valid_pipe_pos(x: int, y: int, world_width: int, world_height: int, foundation_width: int) -> bool:
 	if x <= foundation_width or x >= world_width - foundation_width:
 		return false
@@ -126,7 +150,8 @@ func _is_valid_pipe_pos(x: int, y: int, world_width: int, world_height: int, fou
 	return true
 
 
-## 渲染单根水管
+## 渲染单根水管：首尾用始末贴图，拐弯用拐弯贴图，中间随机选样式
+## 参数 path: 水管路径数组，每项{x, y, dir, prev?}
 func _render_pipe(path: Array) -> void:
 	var half_width: int = map.HALF_WIDTH
 	for i in range(path.size()):
@@ -137,7 +162,6 @@ func _render_pipe(path: Array) -> void:
 		var source_id: int
 		var atlas_coords := Vector2i(0, 0)
 
-		# 首尾用始末，拐弯处用拐弯贴图，中间随机选样式
 		if i == 0 or i == path.size() - 1:
 			source_id = _SOURCE_END
 		elif dir == Dir.HORIZONTAL and point.get("prev", dir) == Dir.VERTICAL:
@@ -152,6 +176,8 @@ func _render_pipe(path: Array) -> void:
 
 
 ## 根据噪声选择水管中间段样式
+## 参数 x/y: 坐标
+## 返回: TileSet source ID
 func _pick_body_style(x: int, y: int) -> int:
 	var val := _pipe_noise.get_noise_2d(x * 3.7, y * 3.7)
 	if val > 0.3:
@@ -165,6 +191,7 @@ func _pick_body_style(x: int, y: int) -> int:
 
 
 ## 获取所有水管路径
+## 返回: 水管路径数组
 func get_pipe_paths() -> Array:
 	return _pipe_paths
 
